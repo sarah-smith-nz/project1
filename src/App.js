@@ -1,24 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import {Home} from './Home'
+import {Product} from './Product'
+import {User} from './User'
+import {ProductListing} from './ProductListing'
+import {BrowserRouter, Route, Switch,NavLink} from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <BrowserRouter>
+    <div className="App Container">
+      <h3 className="d-flex justify-content-center m-3"> 
+      React JS Frontend
+      </h3>
+
+      <nav className="navbar navbar-expand-sm bg-light navbar-dark">
+        <ul className="navbar-nav">
+          <li className="nav-item m-1">
+          <NavLink className="btn btn-light btn-outline-primary" to="/home">
+            Home
+            </NavLink>
+
+          </li>
+          <li className="nav-item m-1">
+          <NavLink className="btn btn-light btn-outline-primary" to="/product">
+            Products
+            </NavLink>
+
+          </li>
+          <li className="nav-item m-1">
+          <NavLink className="btn btn-light btn-outline-primary" to="/myaccount">
+            My Account
+            </NavLink>
+
+          </li>
+        </ul>
+      </nav>
+
+      <Switch>
+        <Route path="/home" component={Home} />
+        <Route exact path="/product" component={Product} />
+        <Route path="/product" component={ProductListing} />
+        <Route path="/user" component={User} />
+        </Switch>
     </div>
+    </BrowserRouter>
   );
 }
 
