@@ -1,7 +1,7 @@
 import {Home} from './Home'
 import {Product} from './Product'
 import {User} from './User'
-import {ProductListing} from './ProductListing'
+import {ProductDetails} from './ProductDetails'
 import {BrowserRouter, Route, Switch,NavLink} from 'react-router-dom';
 
 function App() {
@@ -38,7 +38,7 @@ function App() {
       <Switch>
         <Route path="/home" component={Home} />
         <Route exact path="/product" component={Product} />
-        <Route path="/product" component={ProductListing} />
+        <Route path="/product/:id" component={ProductDetails} />
         <Route path="/user" component={User} />
         </Switch>
     </div>
