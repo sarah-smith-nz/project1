@@ -13,7 +13,7 @@ export class Home extends Component{
         
          </div>
          <div className='d-flex justify-items-center m-3'> 
-        <a href='/products' >Go to Products</a>
+        <a href='/product' >Go to Products</a>
         </div>
            </div>
         )
