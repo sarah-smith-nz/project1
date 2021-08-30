@@ -1,8 +1,10 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "./useFetch";
 import {variables} from './Variables'
 import {Cart} from './Cart'
+
+
 
 export const ProductDetails = () => {
   const { id } = useParams();
@@ -10,24 +12,35 @@ export const ProductDetails = () => {
 
   console.log({product})
 
-  const [cartItems, setCartItems] = useState([]);
+  let [cartItems, setCartItems] = useState([]);
+  let localCart = localStorage.getItem("cart");
+console.log(cartItems)
 
-  const onAdd = (product) => {
-    console.log('clicked!')
+  const addItem = (product) => {
+  
+    let cartCopy = [...cartItems] || [];
     console.log(product)
     const exist = cartItems.find((x) => x.ProductId === product.ProductId);
-    if (exist) {
-      setCartItems(
-        cartItems.map((x) =>
-          x.ProductId === product.ProductId ? { ...exist, qty: exist.qty + 1 } : x
-        )
-      );
-    } else {
-      setCartItems([...cartItems, { ...product, qty: 1 }]);
-    }
-  };
-
-  const onRemove = (product) => {
+      if (exist) {
+        setCartItems(
+          cartItems.map((x) =>
+            x.ProductId === product.ProductId ? { ...exist, qty: exist.qty + 1 } : x
+          )
+        );
+      } else {
+        setCartItems([...cartItems, { ...product, qty: 1 }]);
+      }
+    
+    setCartItems(cartCopy)
+    
+    let stringCart = JSON.stringify(cartCopy);
+    localStorage.setItem("cart", stringCart)
+    
+  }
+  const removeItem = (ProductID) => {
+  
+    let cartCopy = [...cartItems]
+    
     const exist = cartItems.find((x) => x.ProductId === product.ProductId);
     if (exist.qty === 1) {
       setCartItems(cartItems.filter((x) => x.ProductId !== product.ProductId));
@@ -38,8 +51,23 @@ export const ProductDetails = () => {
         )
       );
     }
-  };
-  
+    
+    setCartItems(cartCopy);
+    
+    let cartString = JSON.stringify(cartCopy)
+    localStorage.setItem('cart', cartString)
+  }
+
+
+  //   useEffect(() => {
+  //     localCart = JSON.parse(localCart);
+  //     console.log(localCart)
+  //     if(localCart == null) setCartItems = [];
+  //     if (localCart) setCartItems(localCart)
+    
+  // }, []) 
+
+
 
   return (
     <div >
@@ -55,7 +83,7 @@ export const ProductDetails = () => {
           className="btn btn-primary m-2 float-end"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
-           onClick={() => onAdd(product)}>Redeem</button>
+           onClick={() => addItem(product)}>Redeem</button>
         </div>
       )}
 
@@ -74,9 +102,10 @@ export const ProductDetails = () => {
      <div className="p-2 bd-highlight">
      <Cart
           cartItems={cartItems}
-          onAdd={onAdd}
-          onRemove={onRemove}
+          onAdd={addItem}
+          onRemove={removeItem}
         ></Cart>
+      
      </div>
     
     </div>       

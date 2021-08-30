@@ -1,23 +1,21 @@
 import React from 'react';
 
 import useFetch from "./useFetch";
-import {variables} from './Variables'
+// import {variables} from './Variables'
 
 
 export const Cart = (props) => {
   const { data:user, error, isPending } = useFetch('https://localhost:44396/api/user/1');
-  console.log({user})
 
   const { cartItems, onAdd, onRemove} = props;
-  const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c[0].ProductCost, 0 );
-  // console.log(cartItems)
-
- 
+  console.log(cartItems)
+  
+  const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c[0].ProductCost, 0 )
  
   
   const accountBalance = user? user[0].UserBalance : []
-  console.log(accountBalance)
   const remainingBalance = accountBalance - itemsPrice 
+  
   
   return (
     
