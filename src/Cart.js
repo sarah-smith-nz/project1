@@ -7,13 +7,13 @@ import useFetch from "./useFetch";
 export const Cart = (props) => {
   const { data:user, error, isPending } = useFetch('https://localhost:44396/api/user/1');
 
-  const { cartItems, onAdd, onRemove} = props;
-  console.log(cartItems)
+  const { cartItems, addItem, removeItem, clearItems} = props;
+  console.log("Cart Items in Cart:", cartItems)
   
-  const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c[0].ProductCost, 0 )
+  const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.ProductCost, 0 )
  
   
-  const accountBalance = user? user[0].UserBalance : []
+  const accountBalance = user? user.UserBalance : []
   const remainingBalance = accountBalance - itemsPrice 
   
   
@@ -30,20 +30,22 @@ export const Cart = (props) => {
     
         {cartItems.length === 0 && <div>Cart is empty</div>}
         {cartItems.map((item) => (
-          <div key={item[0].ProductId} className="row">
-            <div className="col-2">{item[0].ProductName}</div>
+          <div key={item.ProductId} className="row">
+            <div className="col-2">{item.ProductName}</div>
             <div className="col-2">
-            <button onClick={() => onRemove(item)} className="remove">
+            <button onClick={() => removeItem(item)} className="">
                 -
               </button>{' '}
-              <button onClick={() => onAdd(item)} className="add">
+              <button onClick={() => addItem(item)} className="">
                 +
               </button>
+
             </div>
 
             <div className="col-2 text-right">
-              {item.qty} x ${item[0].ProductCost}
+              {item.qty} x ${item.ProductCost}
             </div>
+            
           </div>
         ))}
 
@@ -70,6 +72,9 @@ export const Cart = (props) => {
               </div>
             </div>
             <hr />
+            <div><button onClick={() => clearItems()} className="">
+                Clear Cart
+              </button></div>
             <div className="row">
               <button onClick={() => alert('Implement Checkout!')}>
                 Checkout

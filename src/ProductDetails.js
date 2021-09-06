@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "./useFetch";
 import {variables} from './Variables'
@@ -9,63 +9,67 @@ import {Cart} from './Cart'
 export const ProductDetails = () => {
   const { id } = useParams();
   const { data: product, error, isPending } = useFetch(variables.API_URL_ID + id);
-
   console.log({product})
 
-  let [cartItems, setCartItems] = useState([]);
-  let localCart = localStorage.getItem("cart");
-console.log(cartItems)
-
-  const addItem = (product) => {
+  let [cartItems, setCartItems] = useState(() => {
+    const saved = localStorage.getItem("cart");
+    const initialValue = JSON.parse(saved);
+    return initialValue || [];
+  });
   
-    let cartCopy = [...cartItems] || [];
-    console.log(product)
-    const exist = cartItems.find((x) => x.ProductId === product.ProductId);
-      if (exist) {
-        setCartItems(
-          cartItems.map((x) =>
-            x.ProductId === product.ProductId ? { ...exist, qty: exist.qty + 1 } : x
-          )
-        );
-      } else {
-        setCartItems([...cartItems, { ...product, qty: 1 }]);
-      }
-    
-    setCartItems(cartCopy)
-    
+
+
+  const addItem = (item) => {    
+    let cartCopy = [...cartItems] || [] 
+    let  ProductId  = item.ProductId;
+    let existingItem = cartCopy.find(cartItem => cartItem.ProductId === ProductId);
+   // console.log("Add Item", cartItems, "Item", item,  "ProductId", ProductId , "Existing Item", existingItem)
+
+    if (existingItem) {
+      console.log("Existing Item", cartItems)
+
+      setCartItems(
+        cartCopy.map((x) =>
+          x.ProductId === item.ProductId ? { ...existingItem, qty: existingItem.qty + 1 } : x
+        ))
+    } else { 
+       cartCopy.push( {...item, qty: 1})
+           console.log("Add Item - CartCopy", cartCopy)
+
+      setCartItems([...cartCopy])
+    };
+
+
     let stringCart = JSON.stringify(cartCopy);
     localStorage.setItem("cart", stringCart)
-    
   }
-  const removeItem = (ProductID) => {
-  
+
+  const removeItem = (item) => {
     let cartCopy = [...cartItems]
+    let ProductId = item.ProductId;
+    let existingItem = cartCopy.find(cartItem => cartItem.ProductId === ProductId);
     
-    const exist = cartItems.find((x) => x.ProductId === product.ProductId);
-    if (exist.qty === 1) {
-      setCartItems(cartItems.filter((x) => x.ProductId !== product.ProductId));
-    } else {
+    if (existingItem && existingItem.qty !== 0) {
       setCartItems(
-        cartItems.map((x) =>
-          x.id === product.ProductId ? { ...exist, qty: exist.qty - 1 } : x
-        )
-      );
-    }
-    
-    setCartItems(cartCopy);
+        cartCopy.map((x) =>
+          x.ProductId === item.ProductId ? { ...existingItem, qty: existingItem.qty - 1 } : x
+        ))
+    } 
     
     let cartString = JSON.stringify(cartCopy)
     localStorage.setItem('cart', cartString)
   }
 
-
-  //   useEffect(() => {
-  //     localCart = JSON.parse(localCart);
-  //     console.log(localCart)
-  //     if(localCart == null) setCartItems = [];
-  //     if (localCart) setCartItems(localCart)
+  const clearItems = (item) => {
+    let cartCopy = [...cartItems]
     
-  // }, []) 
+    
+      setCartItems([]);  
+
+    let cartString = JSON.stringify(cartCopy)
+    localStorage.clear('cart', cartString);
+
+  }
 
 
 
@@ -75,9 +79,9 @@ console.log(cartItems)
       { error && <div>{ error }</div> }
       { product && (
         <div>
-          <h2>{ product[0].ProductName }</h2>
-          <p>Description: { product[0].ProductDescription }</p>
-          <div>${ product[0].ProductCost }</div>
+          <h2>{ product.ProductName }</h2>
+          <p>Description: { product.ProductDescription }</p>
+          <div>${ product.ProductCost }</div>
           <button
           type="button"
           className="btn btn-primary m-2 float-end"
@@ -102,10 +106,11 @@ console.log(cartItems)
      <div className="p-2 bd-highlight">
      <Cart
           cartItems={cartItems}
-          onAdd={addItem}
-          onRemove={removeItem}
+          addItem={addItem}
+          removeItem={removeItem}
+          clearItems={clearItems}
         ></Cart>
-      
+      {console.log("Cart Sending:", cartItems)}
      </div>
     
     </div>       
