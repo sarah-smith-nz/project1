@@ -4,7 +4,7 @@ import {Switch, Route, Link } from "react-router-dom";
 import AuthService from "./Services/auth-service";
 
 import {Product} from './Product'
-import {User} from './User'
+// import {User} from './User'
 import {ProductDetails} from './ProductDetails'
 import {MyAccount} from './MyAccount'
 import Login from "./Components/login.component";
@@ -29,12 +29,13 @@ class App extends Component {
 
   componentDidMount() {
     const user = AuthService.getCurrentUser();
+    console.log("App componentDidMount:", user)
 
     if (user) {
       this.setState({
         currentUser: user,
-        showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
-        showAdminBoard: user.roles.includes("ROLE_ADMIN"),
+        showModeratorBoard: user.roles.includes("Guest"),
+        showAdminBoard: user.roles.includes("admin"),
       });
     }
   }

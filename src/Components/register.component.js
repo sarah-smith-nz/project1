@@ -122,14 +122,19 @@ export class Register extends Component {
 
   render() {
     return (
-      <div className="col-md-12">
-        <div className="card card-container">
-          <img
-            src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-            alt="profile-img"
-            className="profile-img-card"
-          />
+      <div className="row">
 
+        <div className="col-md-6 col-sm-12">
+          <div className="card card-container">
+            <img
+              src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+              alt="profile-img"
+              className="profile-img-card"
+            />
+          </div>
+        </div>
+        <div className="col-md-6 col-sm-12">
+        <h3>Register</h3>
           <Form
             onSubmit={this.handleRegister}
             ref={c => {
@@ -175,7 +180,7 @@ export class Register extends Component {
                 </div>
 
                 <div className="form-group">
-                  <button className="btn btn-primary btn-block">Sign Up</button>
+                  <button className="btn btn-primary btn-block mt-3">Sign Up</button>
                 </div>
               </div>
             )}
@@ -202,7 +207,7 @@ export class Register extends Component {
             />
           </Form>
         </div>
-      </div>
+        </div>
     );
   }
 }

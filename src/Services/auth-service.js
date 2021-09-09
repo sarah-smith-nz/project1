@@ -1,20 +1,26 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000/api/auth/";
+const API_URL = "https://localhost:44396/api/";
 
 class AuthService {
   login(username, password) {
     return axios
-      .post(API_URL + "signin", {
+      .post(API_URL + "user", {
         username,
         password
       })
       .then(response => {
-        if (response.data.accessToken) {
+        console.log("AuthService:", response)
+        // jwt token
+
+        if (response.data) { //.accessToken
           localStorage.setItem("user", JSON.stringify(response.data));
+          console.log("JWT local:", localStorage)
         }
 
-        return response.data;
+        return (
+          response.data 
+        )          
       });
   }
 
@@ -31,6 +37,7 @@ class AuthService {
   }
 
   getCurrentUser() {
+    
     return JSON.parse(localStorage.getItem('user'));;
   }
 }

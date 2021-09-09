@@ -12,6 +12,7 @@ export class Profile extends Component {
 
   render() {
     const { currentUser } = this.state;
+    console.log("CurrentUserProfile:", currentUser)
 
     return (
       <div className="container">

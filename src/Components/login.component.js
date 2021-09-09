@@ -17,6 +17,7 @@ const required = value => {
 
 export class Login extends Component {
   constructor(props) {
+    console.log("Login:", props)
     super(props);
     this.handleLogin = this.handleLogin.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
@@ -53,9 +54,11 @@ export class Login extends Component {
     this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
-      AuthService.login(this.state.username, this.state.password).then(
+      AuthService.login(this.state.username, this.state.password)
+      .then(
         () => {
           this.props.history.push("/profile");
+          console.log("Props:", this.props)
           window.location.reload();
         },
         error => {
@@ -68,7 +71,7 @@ export class Login extends Component {
 
           this.setState({
             loading: false,
-            message: resMessage
+            message: console.log("Error:", resMessage)
           });
         }
       );
@@ -81,14 +84,19 @@ export class Login extends Component {
 
   render() {
     return (
-      <div className="col-md-12">
-        <div className="card card-container">
+      <div className="row">
+        <div className="col-md-6 col-sm-12">
+          <div className="card card-container">
+        
           <img
             src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
             alt="profile-img"
             className="profile-img-card"
           />
-
+        </div>
+        </div>
+      <div className="col-md-6 col-sm-12">
+      <h3>Log In</h3>
           <Form
             onSubmit={this.handleLogin}
             ref={c => {
@@ -121,7 +129,7 @@ export class Login extends Component {
 
             <div className="form-group">
               <button
-                className="btn btn-primary btn-block"
+                className="btn btn-primary btn-block mt-3"
                 disabled={this.state.loading}
               >
                 {this.state.loading && (
@@ -146,7 +154,7 @@ export class Login extends Component {
             />
           </Form>
         </div>
-      </div>
+        </div>
     );
   }
 }
