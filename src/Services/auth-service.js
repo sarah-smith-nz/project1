@@ -11,11 +11,10 @@ class AuthService {
       })
       .then(response => {
         console.log("AuthService:", response)
-        // jwt token
 
-        if (response.data) { //.accessToken
+        if (response.data.Token) { 
           localStorage.setItem("user", JSON.stringify(response.data));
-          console.log("JWT local:", localStorage)
+          console.log("JWT  local:", localStorage)
         }
 
         return (

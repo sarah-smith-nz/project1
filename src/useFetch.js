@@ -1,15 +1,22 @@
 import { useState, useEffect } from 'react';
+import AuthService from "./Services/auth-service";
 
 const useFetch = (url) => {
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
+  const user = AuthService.getCurrentUser();
+
+  const token = user.Token
 
   useEffect(() => {
     const abortCont = new AbortController();
 
     setTimeout(() => {
-      fetch(url, { signal: abortCont.signal })
+      fetch(url,  {headers: {
+        "Content-Type" : "application/json",
+        "Authorization": `Bearer ${token}`
+      }}, { signal: abortCont.signal })
       .then(res => {
         if (!res.ok) { // error coming back from server
           throw Error('could not fetch the data for that resource');
@@ -34,7 +41,7 @@ const useFetch = (url) => {
 
     // abort the fetch
     return () => abortCont.abort();
-  }, [url])
+  }, [url, token])
 
   return { data, isPending, error };
 }
