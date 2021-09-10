@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-import { isEmail } from "validator";
 
 import AuthService from "../Services/auth-service";
 
@@ -16,11 +15,20 @@ const required = value => {
   }
 };
 
-const email = value => {
-  if (!isEmail(value)) {
+const firstname = value => {
+  if (!value) {
     return (
       <div className="alert alert-danger" role="alert">
-        This is not a valid email.
+        This field is required!      </div>
+    );
+  }
+};
+
+const lastname = value => {
+  if (value.length < 3 || value.length > 20) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        This field is required!
       </div>
     );
   }
@@ -50,28 +58,35 @@ export class Register extends Component {
   constructor(props) {
     super(props);
     this.handleRegister = this.handleRegister.bind(this);
+    this.onChangeFirstname = this.onChangeFirstname.bind(this);
+    this.onChangeLastname = this.onChangeLastname.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
-    this.onChangeEmail = this.onChangeEmail.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
 
     this.state = {
+      firstname: "",
+      lastname: "",
       username: "",
-      email: "",
       password: "",
       successful: false,
       message: ""
     };
   }
+  onChangeFirstname(e) {
+    this.setState({
+      firstname: e.target.value
+    });
+  }
+
+  onChangeLastname(e) {
+    this.setState({
+      lastname: e.target.value
+    });
+  }
 
   onChangeUsername(e) {
     this.setState({
       username: e.target.value
-    });
-  }
-
-  onChangeEmail(e) {
-    this.setState({
-      email: e.target.value
     });
   }
 
@@ -92,16 +107,20 @@ export class Register extends Component {
     this.form.validateAll();
 
     if (this.checkBtn.context._errors.length === 0) {
-      AuthService.register(
+      AuthService
+      .register(
+        this.state.firstname,
+        this.state.lastname,
         this.state.username,
-        this.state.email,
         this.state.password
       ).then(
         response => {
+        console.log("Register:", response)
           this.setState({
-            message: response.data.message,
+            message: response.data,
             successful: true
-          });
+          })
+
         },
         error => {
           const resMessage =
@@ -144,6 +163,30 @@ export class Register extends Component {
             {!this.state.successful && (
               <div>
                 <div className="form-group">
+                  <label htmlFor="firstname">First Name</label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="firstname"
+                    value={this.state.firstname}
+                    onChange={this.onChangeFirstname}
+                    validations={[required, firstname]}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="lastname">Last Name</label>
+                  <Input
+                    type="text"
+                    className="form-control"
+                    name="lastname"
+                    value={this.state.lastname}
+                    onChange={this.onChangeLastname}
+                    validations={[required, lastname]}
+                  />
+                </div>
+
+                <div className="form-group">
                   <label htmlFor="username">Username</label>
                   <Input
                     type="text"
@@ -152,18 +195,6 @@ export class Register extends Component {
                     value={this.state.username}
                     onChange={this.onChangeUsername}
                     validations={[required, vusername]}
-                  />
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <Input
-                    type="text"
-                    className="form-control"
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.onChangeEmail}
-                    validations={[required, email]}
                   />
                 </div>
 
@@ -195,6 +226,7 @@ export class Register extends Component {
                   }
                   role="alert"
                 >
+                  <h4>Registration</h4>
                   {this.state.message}
                 </div>
               </div>
