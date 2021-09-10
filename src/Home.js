@@ -2,31 +2,31 @@ import React,{Component} from 'react';
 import UserService from "./Services/user.service";
 
 export class Home extends Component {
-  constructor(props) {
-    super(props);
+  // constructor(props) {
+  //   super(props);
 
-    this.state = {
-      content: ""
-    };
-  }
+  //   this.state = {
+  //     content: ""
+  //   };
+  // }
 
-  componentDidMount() {
-    UserService.getPublicContent().then(
-      response => {
-        this.setState({
-          content: response.data
-        });
-      },
-      error => {
-        this.setState({
-          content:
-            (error.response && error.response.data) ||
-            error.message ||
-            error.toString()
-        });
-      }
-    );
-  }
+  // componentDidMount() {
+  //   UserService.getPublicContent().then(
+  //     response => {
+  //       this.setState({
+  //         content: response.data
+  //       });
+  //     },
+  //     error => {
+  //       this.setState({
+  //         content:
+  //           (error.response && error.response.data) ||
+  //           error.message ||
+  //           error.toString()
+  //       });
+  //     }
+  //   );
+  // }
 
 
 
@@ -40,7 +40,7 @@ export class Home extends Component {
                  </div>
                  <div className="container">
         <header className="jumbotron">
-          <h3>{this.state.content}</h3>
+          {/* <h3>{this.state.content}</h3> */}
         </header>
       </div>
          <div className='d-flex justify-items-center m-3'> 

@@ -8,6 +8,7 @@ import {Cart} from './Cart'
 
 export const ProductDetails = () => {
   const { id } = useParams();
+  console.log("ProductID:", id)
   const { data: product, error, isPending } = useFetch(variables.API_URL_ID + id);
   console.log({product})
 
@@ -61,13 +62,8 @@ export const ProductDetails = () => {
   }
 
   const clearItems = (item) => {
-    let cartCopy = [...cartItems]
-    
-    
-      setCartItems([]);  
-
-    let cartString = JSON.stringify(cartCopy)
-    localStorage.clear('cart', cartString);
+ 
+    localStorage.removeItem("cart")
 
   }
 
@@ -109,7 +105,7 @@ export const ProductDetails = () => {
           addItem={addItem}
           removeItem={removeItem}
           clearItems={clearItems}
-        ></Cart>
+                 ></Cart>
       {console.log("Cart Sending:", cartItems)}
      </div>
     
