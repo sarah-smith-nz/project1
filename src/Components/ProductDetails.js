@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import { useParams } from "react-router-dom";
-import useFetch from "./useFetch";
-import {variables} from './Variables'
+import useFetch from "../Services/useFetch";
+import {variables} from '../Services/Variables'
 import {Cart} from './Cart'
 
 

@@ -41,6 +41,51 @@ console.log("ProfileProps:", props)
           {/* &&
             currentUser.Role.map((role, index) => <li key={index}>{role}</li>)} */}
         {/* </ul> */}
+        <div>
+          <h4>My Account</h4>
+
+        <table className='table'>
+      <thead className='thead-light'>
+  <tr>
+    <th scope="col">Event</th>
+    <th scope="col">Item</th>
+    <th scope="col">Date</th>
+    <th scope="col">Tokens</th>
+    <th scope="col">Token Balance</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td>Opening Balance</td>
+    <td></td>
+    <td>21/08/2021</td>
+    <td></td>
+    <td>{currentUser.To}</td>
+
+    
+    
+  </tr>
+  <tr>
+    <td>Order</td>
+    <td>Zoo Pass</td>
+    <td>21/08/2021</td>
+    <td>33</td>
+    <td>267</td>
+
+    
+  </tr>
+  <tr>
+    <td>Closing Balance</td>
+    <td></td>
+    <td>21/08/2021</td>
+    <td></td>
+    <td>267</td>
+  </tr>
+  
+
+  </tbody>
+  </table>
+  </div>
       </div>
     );
   }

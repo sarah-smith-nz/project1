@@ -3,13 +3,13 @@ import {Switch, Route, Link } from "react-router-dom";
 
 import AuthService from "./Services/auth-service";
 
-import {Product} from './Product'
+import {Product} from './Pages/Product'
 // import {User} from './User'
-import {ProductDetails} from './ProductDetails'
-import {MyAccount} from './MyAccount'
+import {ProductDetails} from './Components/ProductDetails'
+import {MyAccount} from './Pages/MyAccount'
 import Login from "./Components/login.component";
 import Register from "./Components/register.component";
-import Home from "./Home";
+import Home from "./Pages/Home";
 import Profile from "./Components/profile.component";
 import BoardUser from "./Pages/board-user.component";
 import BoardModerator from "./Pages/board-moderator.component";
@@ -84,20 +84,20 @@ class App extends Component {
                 </Link>
               </li>
             )}
-            {currentUser && (
+            {/* {currentUser && (
               <li className="nav-item">
                 <Link to={"/user"} className="nav-link">
                   User
                 </Link>
               </li>
-            )}
+            )} */}
           </div>
 
           {currentUser ? (
             <div className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link to={"/profile"} className="nav-link">
-                  {currentUser.username}
+                  {currentUser.UserName} Profile
                 </Link>
               </li>
               <li className="nav-item">

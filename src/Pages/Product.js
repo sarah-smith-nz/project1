@@ -1,6 +1,6 @@
-import ProductListing from "./ProductListing";
-import useFetch from "./useFetch";
-import {variables} from './Variables'
+import ProductListing from "../Components/ProductListing";
+import useFetch from "../Services/useFetch";
+import {variables} from '../Services/Variables'
 
 export const Product = () => {
   const { error, isPending, data: products } = useFetch(variables.API_URL+'product')

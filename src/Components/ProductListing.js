@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import {variables} from './Variables'
+import {variables} from '../Services/Variables'
 
 export const ProductListing = ({ product }) => {
     let  PhotoPath = variables.PHOTO_URL
