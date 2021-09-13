@@ -40,6 +40,24 @@ class AuthService {
     
     return JSON.parse(localStorage.getItem('user'));;
   }
+
+  getMyProfile(UserName) {
+    return axios
+      .get(API_URL + "user/"+ UserName)
+      .then(response => {
+
+        if (response.data.UserName === UserName) { 
+
+          console.log("Username Match")
+          console.log("getMyProfile response:", response.data)
+           return response.data      
+      }}) 
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  
 }
 
 export default new AuthService();

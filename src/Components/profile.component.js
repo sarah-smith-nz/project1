@@ -1,19 +1,32 @@
 import React, { Component } from "react";
 import AuthService from "../Services/auth-service";
 
+
+
 export class Profile extends Component {
   constructor(props) {
     super(props);
-console.log("ProfileProps:", props)
+
     this.state = {
-      currentUser: AuthService.getCurrentUser()
+      currentUser: AuthService.getCurrentUser(),
     };
+  
   }
 
   render() {
-    const { currentUser } = this.state;
-    console.log("CurrentUserProfile:", currentUser)
 
+    const { currentUser } = this.state;
+    const userProfile = AuthService.getMyProfile(currentUser.UserName)
+
+  const userDetails = userProfile.then(function(result) { 
+      return (result)
+   }) 
+   
+
+    console.log( {userDetails} )
+    // console.log("Auth Service UserProfile:", userProfile)
+    // console.log("Auth Service UserDetails:", userDetails)
+    // console.log("Userbalance:", userDetails["UserBalance"])
     return (
       <div className="container">
         <header className="jumbotron">
@@ -21,11 +34,11 @@ console.log("ProfileProps:", props)
             <strong>{currentUser.UserName}</strong> Profile
           </h3>
         </header>
-        <p>
+        {/* <p>
           <strong>Token:</strong>{" "}
           {currentUser.Token.substring(0, 20)} ...{" "}
           {currentUser.Token.substr(currentUser.Token.length - 20)}
-        </p>
+        </p> */}
         
         {/* <p>
           <strong>Id:</strong>{" "}
@@ -53,6 +66,8 @@ console.log("ProfileProps:", props)
     <th scope="col">Tokens</th>
     <th scope="col">Token Balance</th>
   </tr>
+  
+ 
   </thead>
   <tbody>
   <tr>
@@ -60,7 +75,11 @@ console.log("ProfileProps:", props)
     <td></td>
     <td>21/08/2021</td>
     <td></td>
-    <td>{currentUser.To}</td>
+    <td>
+        <div>
+          <h2>{ userDetails.UserBalance }</h2> 
+        </div>
+    </td>
 
     
     
