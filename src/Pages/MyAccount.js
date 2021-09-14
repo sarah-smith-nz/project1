@@ -1,10 +1,17 @@
 import React from 'react'
 
-export const MyAccount = () => {
+export const MyAccount = ({user}) => {
 
 return(
   <div>
     <h3>MyAccount Page</h3>
+    <div>UserId {user.UserId} 
+          
+            {/* <img width="250px" height="250px"src={PhotoPath+PhotoFileName} alt="product"/> */}
+            <p>Current Balance {user.UserBalance } </p>
+        
+        </div>
+     
     <table className='table'>
       <thead>
   <tr>
@@ -21,7 +28,7 @@ return(
     <td></td>
     <td>21/08/2021</td>
     <td></td>
-    <td>300</td>
+    <td>{user.UserBalance }</td>
 
     
     

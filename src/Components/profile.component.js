@@ -1,113 +1,50 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import useFetch from "../Services/useFetch";
+import {variables} from '../Services/Variables'
+import MyAccount from "../Pages/MyAccount";
 import AuthService from "../Services/auth-service";
 
+export function Profile(props) {
+
+  const [currentUser, setCurrentUser] = useState([])
+  // const [userProfile, setUserProfile] = useState([])
+  console.log("currentUser:", currentUser)
+  // console.log("userProfile:", userProfile)
+
+  useEffect(()=>{
+      setCurrentUser(AuthService.getCurrentUser())
+    },[])
+
+  // const handleUserClick = () => {
+  //   setUserProfile(AuthService.getMyProfile(currentUser.UserName))
+  // }
+  // console.log("username:", currentUser.UserName)
+  const { error, isPending, data: user } = useFetch(variables.API_URL+'user/' + currentUser.UserName)
 
 
-export class Profile extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      currentUser: AuthService.getCurrentUser(),
-    };
   
-  }
 
-  render() {
-
-    const { currentUser } = this.state;
-    const userProfile = AuthService.getMyProfile(currentUser.UserName)
-
-  const userDetails = userProfile.then(function(result) { 
-      return (result)
-   }) 
-   
-
-    console.log( {userDetails} )
-    // console.log("Auth Service UserProfile:", userProfile)
-    // console.log("Auth Service UserDetails:", userDetails)
-    // console.log("Userbalance:", userDetails["UserBalance"])
-    return (
+  return (
+<>
       <div className="container">
         <header className="jumbotron">
           <h3>
             <strong>{currentUser.UserName}</strong> Profile
           </h3>
         </header>
-        {/* <p>
-          <strong>Token:</strong>{" "}
-          {currentUser.Token.substring(0, 20)} ...{" "}
-          {currentUser.Token.substr(currentUser.Token.length - 20)}
-        </p> */}
-        
-        {/* <p>
-          <strong>Id:</strong>{" "}
-          {currentUser.id}
-        </p>
-        <p>
-          <strong>Email:</strong>{" "}
-          {currentUser.email}
-        </p> */}
-        <strong>Authorities:</strong>{" "}
-        {/* <ul> */}
-          {currentUser.Role} 
-          {/* &&
-            currentUser.Role.map((role, index) => <li key={index}>{role}</li>)} */}
-        {/* </ul> */}
-        <div>
-          <h4>My Account</h4>
-
-        <table className='table'>
-      <thead className='thead-light'>
-  <tr>
-    <th scope="col">Event</th>
-    <th scope="col">Item</th>
-    <th scope="col">Date</th>
-    <th scope="col">Tokens</th>
-    <th scope="col">Token Balance</th>
-  </tr>
-  
- 
-  </thead>
-  <tbody>
-  <tr>
-    <td>Opening Balance</td>
-    <td></td>
-    <td>21/08/2021</td>
-    <td></td>
-    <td>
-        <div>
-          <h2>{ userDetails.UserBalance }</h2> 
+        <div >
+          { error && <div>{ error }</div> }
+          { isPending && <div>Loading...</div> }
+          { user && <MyAccount user={user} /> }
         </div>
-    </td>
-
-    
-    
-  </tr>
-  <tr>
-    <td>Order</td>
-    <td>Zoo Pass</td>
-    <td>21/08/2021</td>
-    <td>33</td>
-    <td>267</td>
-
-    
-  </tr>
-  <tr>
-    <td>Closing Balance</td>
-    <td></td>
-    <td>21/08/2021</td>
-    <td></td>
-    <td>267</td>
-  </tr>
-  
-
-  </tbody>
-  </table>
-  </div>
+     
+        {/* <div>
+          <h4>My Account</h4>
+          <button onClick={handleUserClick}>Show Account</button>
+        </div> */}
       </div>
-    );
-  }
+</>
+  )
 }
 
 export default Profile 
