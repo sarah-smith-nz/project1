@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
+import { Redirect } from 'react-router';
 import AuthService from "./auth-service";
 
 const useFetch = (url) => {
+  const user = AuthService.getCurrentUser();
+  if(user === null){<Redirect to="/login" />}
+
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
-  const user = AuthService.getCurrentUser();
+
 
   const token = user.Token
 
@@ -45,5 +49,6 @@ const useFetch = (url) => {
 
   return { data, isPending, error };
 }
+
  
 export default useFetch;

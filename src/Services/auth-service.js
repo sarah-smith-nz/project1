@@ -20,7 +20,11 @@ class AuthService {
         return (
           response.data 
         )          
-      });
+      })
+      .catch(error => {
+        alert("User name or password is incorrect" );
+        console.error('There was an error!', error);
+    });;
   }
 
   logout() {
@@ -37,25 +41,20 @@ class AuthService {
   }
 
   getCurrentUser() {
-    
     return JSON.parse(localStorage.getItem('user'));;
   }
 
-  getMyProfile(UserName) {
-    return axios
-      .get(API_URL + "user/"+ UserName)
-      .then(response => {
-
-        if (response.data.UserName === UserName) { 
-
-          console.log("Username Match")
-          console.log("getMyProfile response:", response.data)
-           return response.data      
-      }}) 
-      .catch(err => {
-        console.log(err);
-      });
+  deleteUser(id) {
+    const user = JSON.parse(localStorage.getItem('user'));;
+    const token = user.Token
+    const headers = { 
+      "Content-Type" : "application/json",
+        "Authorization": `Bearer ${token}`   
+      };
+  return axios.delete(API_URL + "user/" + id, { headers }) 
   }
+ 
+
 
   
 }

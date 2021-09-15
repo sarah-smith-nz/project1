@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const MyAccount = ({user}) => {
-
+ const today = new Date().toLocaleDateString()
 return(
   <div>
     <h3>MyAccount Page</h3>
@@ -26,14 +26,14 @@ return(
   <tr>
     <td>Opening Balance</td>
     <td></td>
-    <td>21/08/2021</td>
+    <td>{today}</td>
     <td></td>
     <td>{user.UserBalance }</td>
 
     
     
   </tr>
-  <tr>
+  {/* <tr>
     <td>Order</td>
     <td>Zoo Pass</td>
     <td>21/08/2021</td>
@@ -48,7 +48,7 @@ return(
     <td>21/08/2021</td>
     <td></td>
     <td>267</td>
-  </tr>
+  </tr> */}
   
 
   </tbody>
