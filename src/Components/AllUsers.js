@@ -7,24 +7,23 @@ export const AllUsers = ({ content }) => {
   const [list, setList] = useState(content);
   console.log("list", list)
 
-  // let [updatedUser, setUpdatedUser] = useState({
-  //   UserId: '',
-  //   FirstName: '',
-  //   LastName: '',
-  //   UserName: '',
-  //   UserBalance: '',
-  //   Password: '',
-  //   Role: ''
-  // }) 
-  // console.log("UpdatedUser:", updatedUser)
-  // console.log(updatedUser.FirstName)
+  let [updatedUser, setUpdatedUser] = useState({
+    UserId:  content.UserId,
+    FirstName: content.FirstName,
+    LastName: content.LastName,
+    UserName: content.UserName,
+    UserBalance: content.UserBalance,
+    Password: content.Password,
+    Role: content.Role
+  }) 
+  console.log("UpdatedUser:", updatedUser)
+  console.log(content)
 
   // useEffect(() => {
   //   setList(list)
   //   console.log("useEffect:", list)
   // }, [list]);
-
-
+  
   function HandleDelete(id) {
     AuthService.deleteUser(id) 
     .then(
@@ -38,52 +37,39 @@ export const AllUsers = ({ content }) => {
     return setList
   }
 
-  // function HandleClick() {
+  // function HandleClick(value) {
+  //   setUpdatedUser(value)
 
   // }
 
-  // function handleChange(e) {
-  //   const { name, value } = e.target;
-  //   setForm({
-  //     ...form,
-  //     [name]: value,
-  //   });
-  // }
-  // }
+  function handleChange(e) {
+    const { name, value } = e.target;
+    console.log(e.target.value);
+    setUpdatedUser({
+      [name]: value,
+    });
+  }
+  
 
-  // function HandleEdit(props) {
-    
-    
-  //   // const [userid, setUserid] =useState("")
-  //   //   const [firstname, setFirstname] = useState("")
-  //   //   const [lastname, setLastname] = useState("")
-  //   //   const [username, setUsername] = useState("")
-  //   //   const [userbalance, setUserbalance] = useState("")
-  //   //   const [password, setPassword] = useState("")
-  //   //   const [role, setRole] = useState("")
+  function handleSubmit(props) { 
+    console.log("submit:", props)
         
-  //     //const props = userid, firstname, lastname, username, userbalance, password, role  
+      //const props = userid, firstname, lastname, username, userbalance, password, role  
       
-  //     AuthService.editUser(props) 
-  //   .then(
-  //     response => {
-  //     console.log("Edited")
-  //     alert(response.data)
-  //     const updatedList = (
-  //     setUserid(userid),
-  //     setFirstname(firstname),
-  //     setLastname(lastname),
-  //     setUsername(username),
-  //     setUserbalance(userbalance),
-  //     setPassword(password),
-  //     setRole(role)
-  //     )
-  //     console.log("updatedList:", updatedList)
-  //     setList(updatedList)
-  //     })
+      AuthService.editUser(props) 
+    .then(
+      response => {
+      console.log("Edited")
+      alert(response.data)
+      const updatedList = (
+        setUpdatedUser
+      )
+      console.log("updatedList:", updatedList)
+      setList(updatedList)
+      })
     
-  //   return setList
-  // }
+    return setList
+  }
   
 
   return (
@@ -153,26 +139,30 @@ export const AllUsers = ({ content }) => {
     <div className="input-group mb-3">
         <span className="input-group-text">First Name</span>
         <input type="text" className="form-control"
-        // value={updatedUser.FirstName}
-        // onChange={HandleChange}/>
-        />
+        name='FirstName'
+        value={updatedUser.FirstName}
+        onChange={handleChange}/>
+        
     </div>
 
     <div className="input-group mb-3">
         <span className="input-group-text">Last Name</span>
         <input type="text" className="form-control"
-        // value={updatedUser.LastName}
-        // onChange={HandleChange}/>
-        />
+        name='LastName'
+        value={updatedUser.LastName}
+        onChange={handleChange}/>
+        
     </div>
 
     <div className="input-group mb-3">
         <span className="input-group-text">User Name</span>
         <input type="text" className="form-control"
-        // value={updatedUser.UserName}
-        // onChange={HandleChange}/>
-        />
+        name='UserName'
+        value={updatedUser.UserName}
+        onChange={handleChange}/>
+      
     </div>
+    <button onClick={handleSubmit}>Submit edits</button>
 
 
  </div>

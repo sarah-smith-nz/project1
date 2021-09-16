@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import useFetch from "../Services/useFetch";
-// import {variables} from './Variables'
+import {variables} from '../Services/Variables'
+import AuthService from "../Services/auth-service";
 
 
 export const Cart = (props) => {
-  const { data:user, error, isPending } = useFetch('https://localhost:44396/api/user/1');
+  const [currentUser, setCurrentUser] = useState([])
+  console.log("currentUser:", currentUser)
+
+  useEffect(()=>{
+      setCurrentUser(AuthService.getCurrentUser())
+    },[])
+
+
+    const { error, isPending, data: user } = useFetch(variables.API_URL+'user/' + currentUser.UserName)
+    console.log("cartuser:", user)
 
   const { cartItems, addItem, removeItem, clearItems} = props;
-  console.log("Cart Items in Cart:", cartItems)
   
   const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.ProductCost, 0 )
  
