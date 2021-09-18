@@ -9,12 +9,11 @@ export function BoardAdmin (props) {
   const { error, isPending, data: userContent } = useFetch(variables.API_URL+'user')
 
   const [content, setContent] = useState([])
-
+ 
   useEffect(()=>{
     setContent(userContent)
   },[userContent])
 
-  console.log("Admin:", userContent)
  
 
   

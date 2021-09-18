@@ -1,17 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
 import AuthService from "./auth-service";
 
 const useFetch = (url) => {
   const user = AuthService.getCurrentUser();
-  if(user === null){<Redirect to="/login" />}
+  console.log(user)
+  
 
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
 
 
-  const token = user.Token
+  const token = user? user.Token : 1
 
   useEffect(() => {
     const abortCont = new AbortController();
@@ -48,6 +49,7 @@ const useFetch = (url) => {
   }, [url, token])
 
   return { data, isPending, error };
+
 }
 
  

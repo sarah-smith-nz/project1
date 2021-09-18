@@ -11,8 +11,8 @@ import Login from "./Components/login.component";
 import Register from "./Components/register.component";
 import Home from "./Pages/Home";
 import Profile from "./Components/profile.component";
-import BoardUser from "./Pages/board-user.component";
-import BoardModerator from "./Pages/board-moderator.component";
+// import Cart from "./Components/Cart";
+// import BoardModerator from "./Pages/board-moderator.component";
 import BoardAdmin from "./Pages/board-admin.component";
 
 class App extends Component {
@@ -21,7 +21,7 @@ class App extends Component {
     this.logOut = this.logOut.bind(this);
 
     this.state = {
-      showModeratorBoard: false,
+      // showModeratorBoard: false,
       showAdminBoard: false,
       currentUser: undefined,
     };
@@ -34,7 +34,7 @@ class App extends Component {
     if (user) {
       this.setState({
         currentUser: user,
-        showModeratorBoard: user.Role.includes("Guest"),
+        // showModeratorBoard: user.Role.includes("Guest"),
         showAdminBoard: user.Role.includes("admin"),
       });
     }
@@ -45,7 +45,7 @@ class App extends Component {
   }
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
+    const { currentUser, showAdminBoard } = this.state;
 
     return (
 <>
@@ -70,13 +70,13 @@ class App extends Component {
                 Products
               </Link>
             </li>
-            {showModeratorBoard && (
+            {/* {showModeratorBoard && (
               <li className="nav-item">
                 <Link to={"/mod"} className="nav-link">
                   Moderator Board
                 </Link>
               </li>
-            )}
+            )} */}
             {showAdminBoard && (
               <li className="nav-item">
                 <Link to={"/admin"} className="nav-link">
@@ -86,8 +86,8 @@ class App extends Component {
             )}
             {/* {currentUser && (
               <li className="nav-item">
-                <Link to={"/user"} className="nav-link">
-                  User
+                <Link to={"/cart"} className="nav-link">
+                  Cart
                 </Link>
               </li>
             )} */}
@@ -129,8 +129,8 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
-            <Route path="/user" component={BoardUser} />
-            <Route path="/mod" component={BoardModerator} />
+            {/* <Route path="/cart" component={Cart} /> */}
+              {/* <Route path="/mod" component={BoardModerator} /> */}
             <Route path="/admin" component={BoardAdmin} />
             <Route path="/home" component={Home} />
             <Route exact path="/product" component={Product} />

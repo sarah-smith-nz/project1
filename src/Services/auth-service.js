@@ -54,6 +54,15 @@ class AuthService {
   return axios.delete(API_URL + "user/" + id, { headers }) 
   }
 
+  getEditUser(username) {
+    const user = JSON.parse(localStorage.getItem('user'));;
+    const token = user.Token
+    const headers = { 
+      "Content-Type" : "application/json",
+        "Authorization": `Bearer ${token}`   
+      };
+    return axios.get(API_URL + "user/" + username, { headers }) 
+  }
 
   editUser( userid, firstname, lastname, username, userbalance, password, role) {
     const user = JSON.parse(localStorage.getItem('user'));;

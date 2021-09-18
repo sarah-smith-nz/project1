@@ -1,23 +1,12 @@
 import React, {useState, useEffect} from 'react'
-// import useFetch from "../Services/useFetch";
-// import {variables} from '../Services/Variables'
+import useFetch from "../Services/useFetch";
+import {variables} from '../Services/Variables'
 import AuthService from "../Services/auth-service";
 
 export const AllUsers = ({ content }) => {
   const [list, setList] = useState(content);
-  console.log("list", list)
-
-  let [updatedUser, setUpdatedUser] = useState({
-    UserId:  content.UserId,
-    FirstName: content.FirstName,
-    LastName: content.LastName,
-    UserName: content.UserName,
-    UserBalance: content.UserBalance,
-    Password: content.Password,
-    Role: content.Role
-  }) 
-  console.log("UpdatedUser:", updatedUser)
-  console.log(content)
+const [editUser, setEditUser] = useState([])
+const [updatedUser, setUpdatedUser] = useState([])
 
   // useEffect(() => {
   //   setList(list)
@@ -37,39 +26,44 @@ export const AllUsers = ({ content }) => {
     return setList
   }
 
-  // function HandleClick(value) {
-  //   setUpdatedUser(value)
+  function HandleClick(username) {
+    AuthService.getEditUser(username)   
+    .then(
+      response => {
+        console.log("edit user", response)
+        setEditUser(response.data)
+      }
+    )
+  }
 
-  // }
-
-  function handleChange(e) {
-    const { name, value } = e.target;
-    console.log(e.target.value);
-    setUpdatedUser({
-      [name]: value,
+  function handleChange(evt) {
+    const value = evt.target.value;
+    setEditUser({
+      ...editUser,
+      [evt.target.name]: value
     });
   }
   
 
-  function handleSubmit(props) { 
-    console.log("submit:", props)
+  // function handleSubmit(props) { 
+  //   console.log("submit:", props)
         
-      //const props = userid, firstname, lastname, username, userbalance, password, role  
+  //     //const props = userid, firstname, lastname, username, userbalance, password, role  
       
-      AuthService.editUser(props) 
-    .then(
-      response => {
-      console.log("Edited")
-      alert(response.data)
-      const updatedList = (
-        setUpdatedUser
-      )
-      console.log("updatedList:", updatedList)
-      setList(updatedList)
-      })
+  //     AuthService.editUser(props) 
+  //   .then(
+  //     response => {
+  //     console.log("Edited")
+  //     alert(response.data)
+  //     const updatedList = (
+  //       setUpdatedUser
+  //     )
+  //     console.log("updatedList:", updatedList)
+  //     setList(updatedList)
+  //     })
     
-    return setList
-  }
+  //   return setList
+  // }
   
 
   return (
@@ -102,6 +96,7 @@ export const AllUsers = ({ content }) => {
          </svg>  
           </button>
               </td>
+
          {/* edit icon */}
           <td> 
           <button type="button"
@@ -109,7 +104,7 @@ export const AllUsers = ({ content }) => {
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
                  value={x.UserId} 
-                 >
+                 onClick={() => HandleClick(x.UserName)}>
                    <svg xmlns="http://www.w3.org/2000/svg"  width="16" height="16" fill="currentColor" className="bi bi-pencil-square" viewBox="0 0 16 16">
             <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
             <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
@@ -135,21 +130,28 @@ export const AllUsers = ({ content }) => {
         <div className="flex-row bd-highlight mb-3">
         
         <div className="p-2 w-50 bd-highlight">
-    
+      
+        <div className="input-group mb-3">
+        <span className="input-group-text">User ID</span>
+        <input type="text" className="form-control"
+        name='UserId'
+        value={editUser.UserId}
+        />
+    </div>
     <div className="input-group mb-3">
         <span className="input-group-text">First Name</span>
         <input type="text" className="form-control"
         name='FirstName'
-        value={updatedUser.FirstName}
+        value={editUser.FirstName}
         onChange={handleChange}/>
-        
+
     </div>
 
     <div className="input-group mb-3">
         <span className="input-group-text">Last Name</span>
         <input type="text" className="form-control"
         name='LastName'
-        value={updatedUser.LastName}
+        value={editUser.LastName}
         onChange={handleChange}/>
         
     </div>
@@ -158,11 +160,32 @@ export const AllUsers = ({ content }) => {
         <span className="input-group-text">User Name</span>
         <input type="text" className="form-control"
         name='UserName'
-        value={updatedUser.UserName}
+        value={editUser.UserName}
         onChange={handleChange}/>
       
     </div>
-    <button onClick={handleSubmit}>Submit edits</button>
+    <div className="input-group mb-3">
+        <span className="input-group-text">User Balance</span>
+        <input type="text" className="form-control"
+        name='UserBalance'
+        value={editUser.UserBalance}
+        />
+    </div>
+    <div className="input-group mb-3">
+        <span className="input-group-text">Password</span>
+        <input type="text" className="form-control"
+        name='Password'
+        value={editUser.Password}
+        />
+    </div>
+    <div className="input-group mb-3">
+        <span className="input-group-text">Role</span>
+        <input type="text" className="form-control"
+        name='Role'
+        value={editUser.Role}
+        />
+    </div>
+    {/* <button onClick={handleSubmit}>Submit edits</button> */}
 
 
  </div>

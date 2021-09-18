@@ -11,21 +11,35 @@ export const Cart = (props) => {
 
   useEffect(()=>{
       setCurrentUser(AuthService.getCurrentUser())
+
     },[])
 
 
     const { error, isPending, data: user } = useFetch(variables.API_URL+'user/' + currentUser.UserName)
-    console.log("cartuser:", user)
+    
+
 
   const { cartItems, addItem, removeItem, clearItems} = props;
-  
-  const itemsPrice = cartItems.reduce((a, c) => a + c.qty * c.ProductCost, 0 )
  
-  
+
+  const itemsPrice = cartItems? cartItems.reduce((a, c) => a + c.qty * c.ProductCost, 0 ) : 0
   const accountBalance = user? user.UserBalance : []
   const remainingBalance = accountBalance - itemsPrice 
   
-  
+
+  function handleCheckout() {
+if(accountBalance > 0){
+  const newUserBalance = remainingBalance
+
+  return (
+    alert( "Your new token balance is: $"+ newUserBalance 
+    ) 
+
+  )
+} else{
+  alert("You do not have tokens to make this purchase")
+} }
+
   return (
     
     <div className="">
@@ -36,7 +50,6 @@ export const Cart = (props) => {
       
     </div>
       <div>
-    
         {cartItems.length === 0 && <div>Cart is empty</div>}
         {cartItems.map((item) => (
           <div key={item.ProductId} className="row">
@@ -85,7 +98,7 @@ export const Cart = (props) => {
                 Clear Cart
               </button></div>
             <div className="row">
-              <button onClick={() => alert('Implement Checkout!')}>
+              <button onClick={() => handleCheckout()}>
                 Checkout
               </button>
             </div>

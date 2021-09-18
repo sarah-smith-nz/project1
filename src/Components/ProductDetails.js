@@ -1,8 +1,9 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../Services/useFetch";
 import {variables} from '../Services/Variables'
 import {Cart} from './Cart'
+import AuthService from "../Services/auth-service";
 
 
 
@@ -12,6 +13,18 @@ export const ProductDetails = () => {
   const { data: product, error, isPending } = useFetch(variables.API_URL_ID + id);
   console.log({product})
 
+  //source current user
+  const [currentUser, setCurrentUser] = useState([])
+  console.log("currentUser:", currentUser)
+
+  useEffect(()=>{
+      setCurrentUser(AuthService.getCurrentUser())
+
+    },[])
+    const { data: user } = useFetch(variables.API_URL+'user/' + currentUser.UserName)
+    const accountBalance = user? user.UserBalance : []
+
+    //set cart items
   let [cartItems, setCartItems] = useState(() => {
     const saved = localStorage.getItem("cart");
     const initialValue = JSON.parse(saved);
@@ -20,12 +33,14 @@ export const ProductDetails = () => {
   
 
 
-  const addItem = (item) => {    
+  const addItem = (item) => {   
+    if(accountBalance > 0){ 
     let cartCopy = [...cartItems] || [] 
     let  ProductId  = item.ProductId;
     let existingItem = cartCopy.find(cartItem => cartItem.ProductId === ProductId);
-   // console.log("Add Item", cartItems, "Item", item,  "ProductId", ProductId , "Existing Item", existingItem)
 
+   
+  
     if (existingItem) {
       console.log("Existing Item", cartItems)
 
@@ -43,7 +58,7 @@ export const ProductDetails = () => {
 
     let stringCart = JSON.stringify(cartCopy);
     localStorage.setItem("cart", stringCart)
-  }
+  } else {alert("You do not have tokens to make this purchase")}}
 
   const removeItem = (item) => {
     let cartCopy = [...cartItems]
