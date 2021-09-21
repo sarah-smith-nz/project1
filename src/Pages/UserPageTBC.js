@@ -2,7 +2,7 @@ import React, { Component } from "react";
 
 // import UserService from "../Services/auth-service";
 
-export class BoardUser extends Component {
+export class UserPageTBC extends Component {
   // constructor(props) {
   //   super(props);
 
@@ -86,4 +86,4 @@ export class BoardUser extends Component {
   }
 }
 
-export default BoardUser
+export default UserPageTBC

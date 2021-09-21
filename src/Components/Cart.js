@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
-import useFetch from "../Services/useFetch";
-import {variables} from '../Services/Variables'
-import AuthService from "../Services/auth-service";
+import useFetch from "../Services/useFetchHook";
+import {API} from '../Services/API'
+import AuthService from "../Services/AuthService";
 
 
 export const Cart = (props) => {
@@ -15,8 +15,8 @@ export const Cart = (props) => {
     },[])
 
 
-    const { error, isPending, data: user } = useFetch(variables.API_URL+'user/' + currentUser.UserName)
-    
+    const { error, isPending, data: user } = useFetch(API.API_URL+'user/' + currentUser.UserName)
+
 
 
   const { cartItems, addItem, removeItem, clearItems} = props;

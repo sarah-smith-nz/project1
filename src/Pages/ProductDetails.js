@@ -1,28 +1,28 @@
 import React, {useState, useEffect} from "react";
+import { Redirect } from "react-router";
 import { useParams } from "react-router-dom";
-import useFetch from "../Services/useFetch";
-import {variables} from '../Services/Variables'
-import {Cart} from './Cart'
-import AuthService from "../Services/auth-service";
-
+import useFetch from "../Services/useFetchHook";
+import {API} from '../Services/API'
+import {Cart} from '../Components/Cart'
+import AuthService from "../Services/AuthService";
+import ProductGrid from "../Components/ProductsGrid"
+import { Link } from 'react-router-dom';
 
 
 export const ProductDetails = () => {
   const { id } = useParams();
-  console.log("ProductID:", id)
-  const { data: product, error, isPending } = useFetch(variables.API_URL_ID + id);
-  console.log({product})
-
+  const { data: product, error, isPending } = useFetch(API.API_URL_ID + id);
+  const {data:productgrid} = useFetch(API.API_URL+'product')
   //source current user
   const [currentUser, setCurrentUser] = useState([])
-  console.log("currentUser:", currentUser)
 
   useEffect(()=>{
+    if(currentUser == []) {<Redirect to="noaccess" />}
       setCurrentUser(AuthService.getCurrentUser())
+    },[currentUser])
 
-    },[])
-    const { data: user } = useFetch(variables.API_URL+'user/' + currentUser.UserName)
-    const accountBalance = user? user.UserBalance : []
+   const { data: user, error: err, isPending: pending  } = useFetch(API.API_URL+'user/' + currentUser.UserName)
+   const accountBalance = user? user.UserBalance : 0 
 
     //set cart items
   let [cartItems, setCartItems] = useState(() => {
@@ -86,8 +86,14 @@ export const ProductDetails = () => {
 
   return (
     <div >
+      { pending && <div>Loading...</div> }
+      { err && <div>You need to log in to see our products 
+        <Link to="/login"> Log in </Link> now or 
+        <Link to ="register">Register</Link></div> }
       { isPending && <div>Loading...</div> }
-      { error && <div>{ error }</div> }
+      { error && <div>You need to log in to see our products 
+        <Link to="/login"> Log in </Link> now or 
+        <Link to ="register">Register</Link></div> }
       { product && (
         <div>
           <h2>{ product.ProductName }</h2>
@@ -101,6 +107,10 @@ export const ProductDetails = () => {
            onClick={() => addItem(product)}>Redeem</button>
         </div>
       )}
+      
+      <div>
+        { productgrid && <ProductGrid products = {productgrid} />}
+      </div>
 
 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-hidden="true">
 <div className="modal-dialog modal-lg modal-dialog-centered">

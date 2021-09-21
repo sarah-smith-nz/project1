@@ -1,19 +1,15 @@
 import React, { Component } from "react";
 import {Switch, Route, Link } from "react-router-dom";
-
-import AuthService from "./Services/auth-service";
-
-import {Product} from './Pages/Product'
-// import {User} from './User'
-import {ProductDetails} from './Components/ProductDetails'
-import {MyAccount} from './Pages/MyAccount'
-import Login from "./Components/login.component";
-import Register from "./Components/register.component";
+import AuthService from "./Services/AuthService";
+import {Product} from './Pages/Products'
+import {ProductDetails} from './Pages/ProductDetails'
+import Login from "./Pages/Login";
+import Register from "./Pages/Register";
 import Home from "./Pages/Home";
-import Profile from "./Components/profile.component";
-// import Cart from "./Components/Cart";
-// import BoardModerator from "./Pages/board-moderator.component";
-import BoardAdmin from "./Pages/board-admin.component";
+import Profile from "./Pages/Profile";
+import AdminPage from "./Pages/AdminPage";
+import NoAccess from "./Pages/NoAccess";
+
 
 class App extends Component {
   constructor(props) {
@@ -21,7 +17,6 @@ class App extends Component {
     this.logOut = this.logOut.bind(this);
 
     this.state = {
-      // showModeratorBoard: false,
       showAdminBoard: false,
       currentUser: undefined,
     };
@@ -29,12 +24,10 @@ class App extends Component {
 
   componentDidMount() {
     const user = AuthService.getCurrentUser();
-    //console.log("App componentDidMount:", user)
 
     if (user) {
       this.setState({
         currentUser: user,
-        // showModeratorBoard: user.Role.includes("Guest"),
         showAdminBoard: user.Role.includes("admin"),
       });
     }
@@ -70,13 +63,7 @@ class App extends Component {
                 Products
               </Link>
             </li>
-            {/* {showModeratorBoard && (
-              <li className="nav-item">
-                <Link to={"/mod"} className="nav-link">
-                  Moderator Board
-                </Link>
-              </li>
-            )} */}
+           
             {showAdminBoard && (
               <li className="nav-item">
                 <Link to={"/admin"} className="nav-link">
@@ -84,13 +71,7 @@ class App extends Component {
                 </Link>
               </li>
             )}
-            {/* {currentUser && (
-              <li className="nav-item">
-                <Link to={"/cart"} className="nav-link">
-                  Cart
-                </Link>
-              </li>
-            )} */}
+        
           </div>
 
           {currentUser ? (
@@ -129,13 +110,10 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/profile" component={Profile} />
-            {/* <Route path="/cart" component={Cart} /> */}
-              {/* <Route path="/mod" component={BoardModerator} /> */}
-            <Route path="/admin" component={BoardAdmin} />
-            <Route path="/home" component={Home} />
+             <Route path="/admin"component={AdminPage}/>  
+            <Route path ="/noaccess" component={NoAccess} />
             <Route exact path="/product" component={Product} />
             <Route path="/product/:id" component={ProductDetails} />  
-            <Route path="/myaccount" component={MyAccount} />
           </Switch>
         </div>
       </div>

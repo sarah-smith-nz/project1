@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import AuthService from "./auth-service";
+import AuthService from "./AuthService";
 
 const useFetch = (url) => {
   const user = AuthService.getCurrentUser();
-  console.log(user)
   
 
   const [data, setData] = useState(null);

@@ -1,12 +1,19 @@
 import { Link } from 'react-router-dom';
-import {variables} from '../Services/Variables'
+import {API} from '../Services/API'
 
-export const ProductListing = ({ product }) => {
-    let  PhotoPath = variables.PHOTO_URL
+
+export const ProductListing = ({ product , error, isPending }) => {
+    let  PhotoPath = API.PHOTO_URL
   let PhotoFileName ="testproduct.png"
+
+
 
   return (
     <div >
+      { error && <div>You need to log in to see our products 
+        <Link to="/login"> Log in </Link> now or 
+        <Link to ="register">Register</Link></div> }
+      { isPending && <div>Loading...</div> }
       {product.map(pro => (
         <div key={pro.ProductId} >
           <Link to={`/product/${pro.ProductId}`} key={pro.ProductId} product={pro}>
@@ -19,5 +26,6 @@ export const ProductListing = ({ product }) => {
     </div>
   );
 }
+
  
 export default ProductListing;

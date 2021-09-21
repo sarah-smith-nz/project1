@@ -1,11 +1,11 @@
-import ProductListing from "../Components/ProductListing";
+import ProductListing from "../Components/ProductsListing";
 
-import useFetch from "../Services/useFetch";
-import {variables} from '../Services/Variables'
+import useFetch from "../Services/useFetchHook";
+import {API} from '../Services/API'
 import { Link } from 'react-router-dom'
 
 export const Product = () => {
-  const { error, isPending, data: products } = useFetch(variables.API_URL+'product')
+  const { error, isPending, data: products } = useFetch(API.API_URL+'product')
 
   return (
     <div >
@@ -13,7 +13,7 @@ export const Product = () => {
         <Link to="/login"> Log in </Link> now or 
         <Link to ="register">Register</Link></div> }
       { isPending && <div>Loading...</div> }
-      { products && <ProductListing product={products} /> }
+      { products && <ProductListing product={products} error={error} isPedning={isPending} /> }
     </div>
   );
 }
