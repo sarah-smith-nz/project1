@@ -4,7 +4,7 @@ import useFetch from "../Services/useFetchHook";
 import {API} from '../Services/API'
 import { Link } from 'react-router-dom'
 
-export const Product = () => {
+export const Products = () => {
   const { error, isPending, data: products } = useFetch(API.API_URL+'product')
 
   return (
@@ -18,4 +18,4 @@ export const Product = () => {
   );
 }
  
-export default Product;
+export default Products;

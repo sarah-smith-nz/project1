@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import {Switch, Route, Link } from "react-router-dom"
 import AuthService from "./Services/AuthService"
-import {Product} from './Pages/Products'
+import {Products} from './Pages/Products'
 import {ProductDetails} from './Pages/ProductDetails'
 import Login from "./Pages/Login"
 import Register from "./Pages/Register"
@@ -63,7 +63,7 @@ class App extends Component {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to={"/product"} className="nav-link">
+              <Link to={"/products"} className="nav-link">
                 Products
               </Link>
             </li>
@@ -132,7 +132,7 @@ class App extends Component {
             <Route path="/admin"component={AdminPage}/>  
             <Route path ="/noaccess" component={NoAccess} />
             <Route path="/cart"component={Cart}/>  
-            <Route exact path="/product" component={Product} />
+            <Route exact path="/products" component={Products} />
             <Route path="/product/:id" component={ProductDetails} />  
           </Switch>
         </div>

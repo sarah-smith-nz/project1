@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import {API} from '../Services/API'
-
+import './ProductListing.css'
 
 export const ProductListing = ({ product , error, isPending }) => {
     let  PhotoPath = API.PHOTO_URL
@@ -14,15 +14,21 @@ export const ProductListing = ({ product , error, isPending }) => {
         <Link to="/login"> Log in </Link> now or 
         <Link to ="register">Register</Link></div> }
       { isPending && <div>Loading...</div> }
+      <div className="row">
       {product.map(pro => (
-        <div key={pro.ProductId} >
+        <div className="Productcolumns card bg-light" style={{width: "18rem"}}>
+          <div className="card" >
+        <div key={pro.ProductId} className="card-body">
           <Link to={`/product/${pro.ProductId}`} key={pro.ProductId} product={pro}>
-            <h2>{ pro.ProductName }</h2>
-            <img width="250px" height="250px"src={PhotoPath+PhotoFileName} alt="product"/>
-            <p>Product Details {pro.ProductDetails } </p>
+          <img className="card-img-top" width="250px" height="250px"src={PhotoPath+PhotoFileName} alt="product"/>
+            <h2  className="card-title">{ pro.ProductName }</h2>
+            <p className="card-text">Product Details {pro.ProductDetails } </p>
           </Link>
         </div>
+        </div>
+         </div>
       ))}
+   </div>
     </div>
   );
 }
