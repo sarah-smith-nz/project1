@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
-
+import { Link } from 'react-router-dom';
 import AuthService from "../Services/AuthService";
 
 const required = value => {
@@ -211,7 +211,7 @@ export class Register extends Component {
                 </div>
 
                 <div className="form-group">
-                  <button className="btn btn-primary btn-block mt-3">Sign Up</button>
+                  <button className="btn btn-primary btn-block mt-3">Register</button>
                 </div>
               </div>
             )}
@@ -228,6 +228,7 @@ export class Register extends Component {
                 >
                   <h4>Registration</h4>
                   {this.state.message}
+                  <div>  Please<Link to="/login"> Log in </Link></div>
                 </div>
               </div>
             )}

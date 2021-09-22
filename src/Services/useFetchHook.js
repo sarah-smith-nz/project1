@@ -3,14 +3,11 @@ import AuthService from "./AuthService";
 
 const useFetch = (url) => {
   const user = AuthService.getCurrentUser();
-  
+  const token = user? user.Token : 1
 
   const [data, setData] = useState(null);
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
-
-
-  const token = user? user.Token : 1
 
   useEffect(() => {
     const abortCont = new AbortController();
