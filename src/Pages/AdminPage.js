@@ -1,9 +1,10 @@
-import React from "react";
-import AllUsers from "../Components/AllUsers";
-import { Link } from "react-router-dom";
+import React, { useState } from "react"
+import AllUsers from "../Components/AllUsers"
 
 export function AdminPage (props) {
-
+  const [show, setShow] = useState(false);
+  const [btnText, setBtnText] = useState("Show all Users")
+  
  
     return (
       <div className="container">
@@ -12,10 +13,12 @@ export function AdminPage (props) {
          
              
           <div >
-          See all Users
-          { <AllUsers  />}
+          {/* <p>Show state: {show}</p> */}
+        {show ? (
+         <AllUsers /> 
+        ) : null}
+        <button onClick={() => {setShow(!show); setBtnText("Hide all Users")}}> {btnText} </button>
         </div>
-              
 
         </header>
       </div>
