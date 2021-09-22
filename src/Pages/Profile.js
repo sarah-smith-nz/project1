@@ -22,7 +22,7 @@ export function Profile(props) {
       <div className="container">
         <header className="jumbotron">
           <h3>
-            <strong>{currentUser.UserName}</strong> Profile
+            <strong>{currentUser.UserName}'s</strong> Profile
           </h3>
         </header>
         <div >

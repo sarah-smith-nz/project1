@@ -4,23 +4,20 @@ import useFetch from "../Services/useFetchHook";
 import {API} from '../Services/API'
 import AuthService from "../Services/AuthService";
 
+function getCartItems() {
+  if(localStorage.getItem('cart') ==  null){return console.log("cart empty")}
+  else{
+  return JSON.parse(localStorage.getItem('cart'))}
+}
 
 export const Cart = (props) => {
-  const [currentUser, setCurrentUser] = useState([])
-  console.log("currentUser:", currentUser)
+  
+  const currentUser = (AuthService.getCurrentUser())
+  const cartStorage = getCartItems()
+  console.log(cartStorage)
 
-  useEffect(()=>{
-      setCurrentUser(AuthService.getCurrentUser())
-
-    },[])
-
-
-    const { error, isPending, data: user } = useFetch(API.API_URL+'user/' + currentUser.UserName)
-
-
-
+  const { error, isPending, data: user } = useFetch(API.API_URL+'user/' + currentUser.UserName)
   const { cartItems, addItem, removeItem, clearItems} = props;
- 
 
   const itemsPrice = cartItems? cartItems.reduce((a, c) => a + c.qty * c.ProductCost, 0 ) : 0
   const accountBalance = user? user.UserBalance : []
@@ -28,17 +25,17 @@ export const Cart = (props) => {
   
 
   function handleCheckout() {
-if(accountBalance > 0){
-  const newUserBalance = remainingBalance
+    if(accountBalance > 0){
+      const newUserBalance = remainingBalance
+      return (
+        alert( "Your new token balance is: $"+ newUserBalance 
+        ) 
+        )
+      } else{
+        alert("You do not have tokens to make this purchase")
+      } 
+  }
 
-  return (
-    alert( "Your new token balance is: $"+ newUserBalance 
-    ) 
-
-  )
-} else{
-  alert("You do not have tokens to make this purchase")
-} }
 
   return (
     

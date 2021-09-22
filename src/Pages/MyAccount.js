@@ -1,60 +1,41 @@
 import React from 'react'
 
 export const MyAccount = ({user}) => {
- const today = new Date().toLocaleDateString()
+ const day = new Date().getDate()
+ const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+ const date = new Date()
+ const month = months[date.getMonth()]
+ const year = new Date().getFullYear()
+
 return(
   <div>
     <h3>MyAccount Page</h3>
-    <div>UserId {user.UserId} 
-          
-            {/* <img width="250px" height="250px"src={PhotoPath+PhotoFileName} alt="product"/> */}
-            <p>Current Balance {user.UserBalance } </p>
-        
-        </div>
+    <div>User: {user.UserId}            
+     <p>Current Balance: ${user.UserBalance } </p>   
+    </div>
      
     <table className='table'>
       <thead>
-  <tr>
-    <th scope="col">Event</th>
-    <th scope="col">Item</th>
-    <th scope="col">Date</th>
-    <th scope="col">Tokens</th>
-    <th scope="col">Token Balance</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr>
-    <td>Opening Balance</td>
-    <td></td>
-    <td>{today}</td>
-    <td></td>
-    <td>{user.UserBalance }</td>
-
-    
-    
-  </tr>
-  {/* <tr>
-    <td>Order</td>
-    <td>Zoo Pass</td>
-    <td>21/08/2021</td>
-    <td>33</td>
-    <td>267</td>
-
-    
-  </tr>
-  <tr>
-    <td>Closing Balance</td>
-    <td></td>
-    <td>21/08/2021</td>
-    <td></td>
-    <td>267</td>
-  </tr> */}
-  
-
-  </tbody>
+      <tr>
+        <th scope="col">Event</th>
+        <th scope="col">Item</th>
+        <th scope="col">Date</th>
+        <th scope="col">Tokens</th>
+        <th scope="col">Token Balance</th>
+      </tr>
+      </thead>
+    <tbody>
+      <tr>
+        <td>Opening Balance</td>
+        <td></td>
+        <td>{day} {month} {year}</td>
+        <td></td>
+        <td>${user.UserBalance }</td>  
+      </tr>
+    </tbody>
   </table>
 
-  </div>
+</div>
 
 )
 

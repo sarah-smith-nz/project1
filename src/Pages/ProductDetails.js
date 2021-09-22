@@ -1,11 +1,10 @@
-import React, {useState, useEffect} from "react";
-import { Redirect } from "react-router";
+import React, {useState} from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../Services/useFetchHook";
 import {API} from '../Services/API'
 import {Cart} from '../Components/Cart'
 import AuthService from "../Services/AuthService";
-import ProductGrid from "../Components/ProductsGrid"
+import ProductsGrid from "../Components/ProductsGrid"
 import { Link } from 'react-router-dom';
 
 
@@ -14,14 +13,13 @@ export const ProductDetails = () => {
   const { data: product, error, isPending } = useFetch(API.API_URL_ID + id);
   const {data:productgrid} = useFetch(API.API_URL+'product')
   //source current user
-  const [currentUser, setCurrentUser] = useState([])
+  // useEffect(() => {
+  //   const currentUser = AuthService.getCurrentUser()
+  //   return currentUser}
+  //   )
 
-  useEffect(()=>{
-    if(currentUser == []) {<Redirect to="noaccess" />}
-      setCurrentUser(AuthService.getCurrentUser())
-    },[currentUser])
-
-   const { data: user, error: err, isPending: pending  } = useFetch(API.API_URL+'user/' + currentUser.UserName)
+   const currentUser = AuthService.getCurrentUser()
+   const { data: user } = useFetch(API.API_URL+'user/' + currentUser.UserName)
    const accountBalance = user? user.UserBalance : 0 
 
     //set cart items
@@ -86,10 +84,6 @@ export const ProductDetails = () => {
 
   return (
     <div >
-      { pending && <div>Loading...</div> }
-      { err && <div>You need to log in to see our products 
-        <Link to="/login"> Log in </Link> now or 
-        <Link to ="register">Register</Link></div> }
       { isPending && <div>Loading...</div> }
       { error && <div>You need to log in to see our products 
         <Link to="/login"> Log in </Link> now or 
@@ -105,13 +99,13 @@ export const ProductDetails = () => {
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
            onClick={() => addItem(product)}>Redeem</button>
-        </div>
-      )}
-      
-      <div>
-        { productgrid && <ProductGrid products = {productgrid} />}
-      </div>
+       
 
+        <div>
+          { productgrid && <ProductsGrid products = {productgrid} />}
+        </div>
+        </div>
+)}
 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-hidden="true">
 <div className="modal-dialog modal-lg modal-dialog-centered">
 <div className="modal-content">

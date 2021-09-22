@@ -1,6 +1,6 @@
 import React from "react";
 import AllUsers from "../Components/AllUsers";
-
+import { Link } from "react-router-dom";
 
 export function AdminPage (props) {
 
@@ -12,7 +12,7 @@ export function AdminPage (props) {
          
              
           <div >
-          
+          See all Users
           { <AllUsers  />}
         </div>
               
