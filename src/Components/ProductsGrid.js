@@ -13,16 +13,19 @@ const similarProducts = products.filter(pro => (pro.ProductId != id))
 
   return (
     <div >
-<div>Similar Products</div>
-      {similarProducts.map(pro => (
-        <div key={pro.ProductId} >
-          <Link to={`/product/${pro.ProductId}`} key={pro.ProductId} product={pro}>
-            <h2>{ pro.ProductName }</h2>
-            <img width="250px" height="250px"src={PhotoPath+PhotoFileName} alt="product"/>
-            
-          </Link>
-        </div>
-      ))}
+      <h4>Similar Products</h4>
+      <div className="card-group">
+          {similarProducts.slice(0, 3).map(pro => (
+            <div className="card">
+                <div key={pro.ProductId}  className="card-body" >
+                  <Link to={`/product/${pro.ProductId}`} key={pro.ProductId} product={pro}>
+                  <img class="card-img-top" width="250px" height="250px"src={PhotoPath+PhotoFileName} alt="product"/> 
+                  <h2 className="card-title">{ pro.ProductName }</h2>           
+                  </Link>
+                </div>
+            </div>  
+           ))}
+      </div>
     </div>
   );
 }

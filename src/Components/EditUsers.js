@@ -5,7 +5,7 @@ import UserService from "../Services/UserService";
 import { Link } from "react-router-dom";
 
 
-export const AllUsers = () => {
+export const EditUsers = () => {
    const [list, setList] = useState([]);
    const apiData = useFetch(API.API_URL+'user');
    const [isLoaded, setIsLoaded] = useState(false)
@@ -233,4 +233,4 @@ export const AllUsers = () => {
 );
 }
  
-export default AllUsers;
+export default EditUsers;

@@ -3,15 +3,15 @@ import {API} from './API'
 
 const API_URL = API.API_URL
 
-class UserService {
-  deleteProduct(ProductId) {
+class ProductService {
+  deleteProduct(id) {
     const user = JSON.parse(localStorage.getItem('user'));;
     const token = user.Token
     const headers = { 
       "Content-Type" : "application/json",
         "Authorization": `Bearer ${token}`   
       };
-  return axios.delete(API_URL + "product/" + ProductId, { headers }) 
+  return axios.delete(API_URL + "product/" + id, { headers }) 
   }
 
   getEditedProduct(ProductId) {
@@ -41,4 +41,4 @@ class UserService {
  
 }
 
-export default new UserService();
+export default new ProductService();

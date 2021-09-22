@@ -10,8 +10,8 @@ import { Link } from 'react-router-dom';
 
 export const ProductDetails = () => {
   const { id } = useParams();
-  const { data: product, error, isPending } = useFetch(API.API_URL_ID + id);
-  const {data:productgrid} = useFetch(API.API_URL+'product')
+  const { data: product, error, isPending } = useFetch(API.API_URL_PRODUCT + id);
+  const {data:productgrid} = useFetch(API.API_URL_PRODUCT)
   //source current user
   // useEffect(() => {
   //   const currentUser = AuthService.getCurrentUser()
@@ -90,20 +90,23 @@ export const ProductDetails = () => {
         <Link to ="register">Register</Link></div> }
       { product && (
         <div>
-          <h2>{ product.ProductName }</h2>
-          <p>Description: { product.ProductDescription }</p>
-          <div>${ product.ProductCost }</div>
-          <button
-          type="button"
-          className="btn btn-primary m-2 float-end"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
-           onClick={() => addItem(product)}>Redeem</button>
-       
-
-        <div>
-          { productgrid && <ProductsGrid products = {productgrid} />}
-        </div>
+          <div className="card bg-light">
+            <div className="card-body">
+              <h2 className="card-title">{ product.ProductName }</h2>
+              <p className="card-text"> { product.ProductDescription }</p>
+              <div>${ product.ProductCost }</div>
+              <button
+                type="button"
+                className="btn btn-primary m-2 float-end"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                onClick={() => addItem(product)}>Redeem
+              </button>
+            </div>
+          </div>
+          <div>
+            { productgrid && <ProductsGrid products = {productgrid} />}
+          </div>
         </div>
 )}
 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-hidden="true">

@@ -1,26 +1,35 @@
 import React, { useState } from "react"
-import AllUsers from "../Components/AllUsers"
+import EditUsers from "../Components/EditUsers"
+import EditProducts from "../Components/EditProducts"
 
 export function AdminPage (props) {
-  const [show, setShow] = useState(false);
-  const [btnText, setBtnText] = useState("Show all Users")
+  const [showUsers, setShowUsers] = useState(false);
+  const [UsersText, setUsersText] = useState("Show all Users")
+  const [showProds, setShowProds] = useState(false);
+  const [ProdsText, setProdsText] = useState("Show all Products")
+
   
  
     return (
       <div className="container">
         <header className="jumbotron">
           <h3>This is Admin Board</h3>
-         
+        </header> 
              
           <div >
-          {/* <p>Show state: {show}</p> */}
-        {show ? (
-         <AllUsers /> 
+        {showUsers ? (
+         <EditUsers /> 
         ) : null}
-        <button onClick={() => {setShow(!show); setBtnText("Hide all Users")}}> {btnText} </button>
+        <button onClick={() => {setShowUsers(!showUsers); setUsersText("Hide all Users")}}> {UsersText} </button>
+        </div>
+        <div >
+        {showProds ? (
+         <EditProducts /> 
+        ) : null}
+        <button onClick={() => {setShowProds(!showProds); setProdsText("Hide all Products")}}> {ProdsText} </button>
         </div>
 
-        </header>
+        
       </div>
     );
   }
