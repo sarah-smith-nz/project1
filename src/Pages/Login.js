@@ -17,7 +17,6 @@ const required = value => {
 
 export class Login extends Component {
   constructor(props) {
-    console.log("Login:", props)
     super(props);
     this.handleLogin = this.handleLogin.bind(this);
     this.onChangeUsername = this.onChangeUsername.bind(this);
