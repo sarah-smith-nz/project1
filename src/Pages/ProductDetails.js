@@ -90,7 +90,7 @@ export const ProductDetails = () => {
         <Link to ="register">Register</Link></div> }
       { product && (
         <div>
-          <div className="card bg-light">
+          <div className="card ">
             <div className="card-body">
               <h2 className="card-title">{ product.ProductName }</h2>
               <p className="card-text"> { product.ProductDescription }</p>

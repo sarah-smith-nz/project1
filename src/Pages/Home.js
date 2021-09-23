@@ -2,34 +2,6 @@ import React,{Component} from 'react';
 //import UserService from "../Services/user.service";
 
 export class Home extends Component {
-  // constructor(props) {
-  //   super(props);
-
-  //   this.state = {
-  //     content: ""
-  //   };
-  // }
-
-  // componentDidMount() {
-  //   UserService.getPublicContent().then(
-  //     response => {
-  //       this.setState({
-  //         content: response.data
-  //       });
-  //     },
-  //     error => {
-  //       this.setState({
-  //         content:
-  //           (error.response && error.response.data) ||
-  //           error.message ||
-  //           error.toString()
-  //       });
-  //     }
-  //   );
-  // }
-
-
-
 
 
     render(){
@@ -48,7 +20,7 @@ export class Home extends Component {
         
          </div>
          <div className='d-flex justify-items-center m-3'> 
-        <a href='/product' >Go to Products</a>
+        <a href='/products' >Go to Products</a>
         </div>
            </div>
         )
