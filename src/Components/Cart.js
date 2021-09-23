@@ -11,19 +11,25 @@ function getCartItems() {
 }
 
 export const Cart = (props) => {
+  //props coming through from ProductDetails Page
+   const { cartItems, addItem, removeItem, clearItems} = props;
   
+  
+  useEffect(() => {const cartStorage = getCartItems()
+  console.log(cartStorage)},[] )
+  
+  //sourcing user data
   const currentUser = (AuthService.getCurrentUser())
-  const cartStorage = getCartItems()
-  console.log(cartStorage)
-
   const { error, isPending, data: user } = useFetch(API.API_URL+'user/' + currentUser.UserName)
-  const { cartItems, addItem, removeItem, clearItems} = props;
+ 
+
+  //cart calculating total amounts
 
   const itemsPrice = cartItems? cartItems.reduce((a, c) => a + c.qty * c.ProductCost, 0 ) : 0
   const accountBalance = user? user.UserBalance : []
   const remainingBalance = accountBalance - itemsPrice 
   
-
+ //Checkout button
   function handleCheckout() {
     if(accountBalance > 0){
       const newUserBalance = remainingBalance

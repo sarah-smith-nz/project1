@@ -13,7 +13,7 @@ export function AdminPage (props) {
     return (
       <div className="container">
         <header className="jumbotron">
-          <h3>This is Admin Board</h3>
+          <h3>This is Admin Page</h3>
         </header> 
              
           <div >

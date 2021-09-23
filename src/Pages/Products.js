@@ -1,4 +1,4 @@
-import ProductListing from "../Components/ProductsListing";
+import ProductsListing from "../Components/ProductsListing";
 
 import useFetch from "../Services/useFetchHook";
 import {API} from '../Services/API'
@@ -13,7 +13,7 @@ export const Products = () => {
         <Link to="/login"> Log in </Link> now or 
         <Link to ="register">Register</Link></div> }
       { isPending && <div>Loading...</div> }
-      { products && <ProductListing product={products} error={error} isPedning={isPending} /> }
+      { products && <ProductsListing product={products} error={error} isPedning={isPending} /> }
     </div>
   );
 }

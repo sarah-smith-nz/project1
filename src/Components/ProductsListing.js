@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import {API} from '../Services/API'
-import './ProductListing.css'
+import './ProductsListing.css'
 
-export const ProductListing = ({ product , error, isPending }) => {
+export const ProductsListing = ({ product , error, isPending }) => {
     let  PhotoPath = API.PHOTO_URL
   let PhotoFileName ="testproduct.png"
 
@@ -34,4 +34,4 @@ export const ProductListing = ({ product , error, isPending }) => {
 }
 
  
-export default ProductListing;
+export default ProductsListing;
