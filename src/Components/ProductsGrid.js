@@ -19,7 +19,7 @@ const similarProducts = products.filter(pro => (pro.ProductId != id))
             <div className="card">
                 <div key={pro.ProductId}  className="card-body" >
                   <Link to={`/product/${pro.ProductId}`} key={pro.ProductId} product={pro}>
-                  <img class="card-img-top" width="250px" height="250px"src={PhotoPath+PhotoFileName} alt="product"/> 
+                  <img className="card-img-top" width="250px" height="250px"src={PhotoPath+PhotoFileName} alt="product"/> 
                   <h2 className="card-title">{ pro.ProductName }</h2>           
                   </Link>
                 </div>

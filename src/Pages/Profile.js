@@ -3,22 +3,30 @@ import useFetch from "../Services/useFetchHook";
 import {API} from '../Services/API'
 import MyAccount from "./MyAccount";
 import AuthService from "../Services/AuthService";
+import NoAccess from "./NoAccess";
+import { Redirect } from "react-router";
 
 export function Profile(props) {
 
-  const [currentUser, setCurrentUser] = useState([])
-  console.log("currentUser:", currentUser)
+  // const [currentUser, setCurrentUser] = useState([])
+  // const [showProfilePage, setShowProfilePage] = useState(false)
 
-  useEffect(()=>{
-      setCurrentUser(AuthService.getCurrentUser())
-    },[])
+  
+const currentUser = (AuthService.getCurrentUser())
 
+// console.log("currentuser:", currentUser)
+//   if (currentUser === [] || currentUser == null) {
+  
+//     <Redirect to="/login" />}else{
+//       setShowProfilePage(
+//        true)
+//       };
 
   const { error, isPending, data: user } = useFetch(API.API_URL+'user/' + currentUser.UserName)
 
 
   return (
-<>
+<div> 
       <div className="container">
         <header className="jumbotron">
           <h3>
@@ -32,7 +40,7 @@ export function Profile(props) {
         </div>
      
       </div>
-</>
+</div>
   )
 }
 

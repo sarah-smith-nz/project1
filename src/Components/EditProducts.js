@@ -20,6 +20,7 @@ export const EditProducts = () => {
   },[apiData, isLoaded])
 
   const [editProduct, setEditProduct] = useState([])
+  const [newProduct, setNewProduct] = useState([])
   
   function handleDelete(id) {
     ProductService.deleteProduct(id) 
@@ -51,7 +52,7 @@ export const EditProducts = () => {
   }
   
 
-  function handleSubmit() { 
+  function handleEditSubmit() { 
     console.log("submit:", editProduct)
      
     ProductService.updateProduct(editProduct) 
@@ -76,16 +77,48 @@ export const EditProducts = () => {
     return setList
   }
   
+  function handleAddFormChange(evt) {
+    const value = evt.target.value;
+    setNewProduct({
+      ...newProduct,
+      [evt.target.name]: value
+    });
+  }
+
+  function handleAddNewProductSubmit(newProduct) {
+    console.log("submitnewProd:", newProduct)
+
+    ProductService.addNewProduct(newProduct)
+    .then(
+      response => {
+      console.log("Added")
+      alert(response.data, "Please close the modal pop up")
+      })
+      const newList = list.concat(setNewProduct)
+   
+      setList(newList);
+   
+    
+    return setList
+  
+  }
 
   return (
     <div>
   
    
     <div >
-       <h6>Add New Product <Link to="/register"><svg  xmlns="http://www.w3.org/2000/svg"  width="16" height="16" fill="currentColor" className="bi bi-person-plus-fill" viewBox="0 0 16 16">
+       <h6>Add New Product 
+         <button 
+          type="button"
+          className="btn btn-light mr-1"
+          data-bs-toggle="modal"
+          data-bs-target="#addNewProductModal"
+          value={newProduct} 
+          ><svg  xmlns="http://www.w3.org/2000/svg"  width="16" height="16" fill="currentColor" className="bi bi-person-plus-fill" viewBox="0 0 16 16">
                 <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
                 <path fillRule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
-              </svg>  </Link>  
+              </svg> </button>
           </h6>
       <table className='table'>
       <thead>
@@ -141,7 +174,7 @@ export const EditProducts = () => {
    
     </tbody>
   </table>
-  
+   {/* Edit Product Modal */}
     <div>
     <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div className="modal-dialog modal-lg modal-dialog-centered">
@@ -192,7 +225,7 @@ export const EditProducts = () => {
     </div>
     <div className="input-group mb-3">
         <span className="input-group-text">Product Cost</span>
-        <input type="text" className="form-control"
+        <input type="number" className="form-control"
         name='ProductCost'
         value={editProduct.ProductCost}
         onChange={handleEditFormChange}
@@ -214,7 +247,94 @@ export const EditProducts = () => {
         onChange={handleEditFormChange} 
         />        
     </div>
-    <button onClick={handleSubmit}>Submit edits</button>
+    <button onClick={handleEditSubmit}>Submit edits</button>
+
+
+ </div>
+ 
+</div>
+      </div>
+      </div>
+      </div>       
+          
+            
+      </div>
+      </div>
+
+         {/* Add Product Modal */}
+         <div>
+    <div className="modal fade" id="addNewProductModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div className="modal-dialog modal-lg modal-dialog-centered">
+    <div className="modal-content">
+      <div className="modal-header">
+          <h5 className="modal-title">Edit Product</h5>
+          <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"
+          ></button>
+      </div>
+
+      <div className="modal-body">
+        <div className="flex-row bd-highlight mb-3">
+        
+        <div className="p-2 w-50 bd-highlight">
+      
+        {/* <div className="input-group mb-3">
+        <span className="input-group-text">Product ID: {editProduct.ProductId}</span>
+        <input type="hidden" className="form-control"
+        name='UserId'
+        value={newProduct.ProductId}
+        />
+    </div> */}
+    <div className="input-group mb-3">
+        <span className="input-group-text">Product Name</span>
+        <input type="text" className="form-control"
+        name='FirstName'
+        value={newProduct.ProductName}
+        onChange={handleAddFormChange}/>
+
+    </div>
+
+    <div className="input-group mb-3">
+        <span className="input-group-text">Product Details</span>
+        <input type="text" className="form-control"
+        name='ProductDetails'
+        value={newProduct.ProductDetails}
+        onChange={handleAddFormChange}/>
+        
+    </div>
+
+    <div className="input-group mb-3">
+        <span className="input-group-text">Product Description</span>
+        <input type="text" className="form-control"
+        name='ProductDescription'
+        value={newProduct.ProductDescription}
+        onChange={handleAddFormChange}/>
+      
+    </div>
+    <div className="input-group mb-3">
+        <span className="input-group-text">Product Cost</span>
+        <input type="number" className="form-control"
+        name='ProductCost'
+        value={newProduct.ProductCost}
+        onChange={handleAddFormChange}
+        />
+    </div>
+    <div className="input-group mb-3">
+        <span className="input-group-text">FilePhotoName</span>
+        <input type="text" className="form-control"
+        name='FilePhotoName'
+        value={newProduct.FilePhotoName}
+        onChange={handleAddFormChange}
+        />
+    </div>
+    <div className="input-group mb-3">
+        <span className="input-group-text">Stock Count</span>
+        <input type="number" className="form-control"
+        name='StockCount'
+        value={newProduct.StockCount}
+        onChange={handleAddFormChange} 
+        />        
+    </div>
+    <button onClick={() => {handleAddNewProductSubmit(newProduct)}}>Submit new product</button>
 
 
  </div>

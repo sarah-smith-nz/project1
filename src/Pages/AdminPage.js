@@ -10,12 +10,12 @@ export function AdminPage (props) {
   const [showProds, setShowProds] = useState(false);
   const [ProdsText, setProdsText] = useState("Show all Products")
 
-  const [showAdminPage, setShowAdminPage] = useState(false)
-  const user = AuthService.getCurrentUser();
-  if (user) {
-    setShowAdminPage(
-     user.Role.includes("admin"))
-    };
+  // const [showAdminPage, setShowAdminPage] = useState(false)
+  // const user = AuthService.getCurrentUser();
+  // if (user) {
+  //   setShowAdminPage(
+  //    user.Role.includes("admin"))
+  //   };
   
  
     return (
@@ -23,7 +23,7 @@ export function AdminPage (props) {
         <header className="jumbotron">
           <h3>This is Admin Page</h3>
         </header> 
-         {showAdminPage ?  ( 
+        
            <div>  
           <div >
             
@@ -38,8 +38,7 @@ export function AdminPage (props) {
         ) : null}
         <button onClick={() => {setShowProds(!showProds); setProdsText("Hide all Products")}}> {ProdsText} </button>
         </div>
-        </div>)
-:<div>{<NoAccess />}</div>}
+        </div>
         
       </div>
     );

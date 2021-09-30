@@ -36,6 +36,18 @@ class ProductService {
   }) 
   }
 
+  addNewProduct(newProduct) {
+    const user = JSON.parse(localStorage.getItem('user'));;
+    const token = user.Token
+    const headers = { 
+      "Content-Type" : "application/json",
+        "Authorization": `Bearer ${token}`   
+      };
+    return axios.post(API_URL + "product", newProduct, {
+      headers
+    })    
+  }
+
  
 
  
