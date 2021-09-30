@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import EditUsers from "../Components/EditUsers"
 import EditProducts from "../Components/EditProducts"
 import AuthService from "../Services/AuthService"
@@ -11,11 +11,13 @@ export function AdminPage (props) {
   const [ProdsText, setProdsText] = useState("Show all Products")
 
   const [showAdminPage, setShowAdminPage] = useState(false)
-  const user = AuthService.getCurrentUser();
-  if (user) {
-    setShowAdminPage(
-     user.Role.includes("admin"))
-    };
+  useEffect(() =>{ 
+    const user = AuthService.getCurrentUser();
+    if (user) {
+      setShowAdminPage(
+       user.Role.includes("admin"))
+      }} ,[])
+ 
   
  
     return (
