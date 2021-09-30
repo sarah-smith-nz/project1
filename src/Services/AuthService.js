@@ -1,6 +1,7 @@
 import axios from "axios";
 import authHeader from './AuthHeader';
 import {API} from './API'
+import { Redirect } from "react-router";
 
 const API_URL = API.API_URL
 
@@ -42,7 +43,12 @@ class AuthService {
   }
 
   getCurrentUser() {
-    return JSON.parse(localStorage.getItem('user'));;
+    const user = JSON.parse(localStorage.getItem('user'))
+    if (user.Token.exp * 1000 < Date.now()) {
+      localStorage.removeItem("user","cart");
+    <Redirect to="/login" />  }
+    return user
+
   }
 
   getAdminBoard() {   

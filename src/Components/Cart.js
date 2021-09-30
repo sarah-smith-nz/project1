@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import useFetch from "../Services/useFetchHook";
 import {API} from '../Services/API'
