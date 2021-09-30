@@ -13,28 +13,28 @@ export const ProductDetails = () => {
   const { data: product, error, isPending } = useFetch(API.API_URL_PRODUCT + id);
   const {data:productgrid} = useFetch(API.API_URL_PRODUCT)
 
-  const [items, setItems] = useState(() => {
+  const [cartItems, setCartItems] = useState(() => {
     const saved = localStorage.getItem("cart")
     const initialValue = JSON.parse(saved)
     return initialValue || []}
   )
-console.log("ProductDetails:", items)
+console.log("ProductDetails:", cartItems)
  
- function handleClick(item) {
-  let cartCopy = [...items]  
+ const addItem=(item)=> {
+  let cartCopy = [...cartItems]  
   let  ProductId  = item.ProductId;
   let existingItem = cartCopy.find(cartItem => cartItem.ProductId === ProductId);   
 
   if (existingItem) {
-    console.log("Existing Item", items)
-    setItems(
+    console.log("PDExisting Item", cartItems)
+    setCartItems(
       cartCopy.map((x) =>
         x.ProductId === item.ProductId ? { ...existingItem, qty: existingItem.qty + 1 } : x
       ))
   } else { 
      cartCopy.push( {...item, qty: 1})
-         console.log("Add Item - CartCopy", cartCopy)
-         setItems([...cartCopy])
+         console.log("PDAdd Item - CartCopy", cartCopy)
+         setCartItems([...cartCopy])
   }
     let stringCart = JSON.stringify(cartCopy);
     localStorage.setItem("cart", stringCart)
@@ -60,7 +60,7 @@ console.log("ProductDetails:", items)
                 className="btn btn-primary m-2 float-end"
                 data-bs-toggle="modal"
                 data-bs-target="#cartModal"
-                onClick={()=>{handleClick({product})}}>Redeem
+                onClick={()=>{addItem(product)}}>Redeem
               </button>
             </div>
           </div>
@@ -71,7 +71,8 @@ console.log("ProductDetails:", items)
 
       <div>
      <Cart 
-         cartItems={items}>
+        cartItems={cartItems}
+         addItem={addItem}>
 
       </Cart>
     </div> 

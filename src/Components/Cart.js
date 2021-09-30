@@ -8,15 +8,16 @@ import AuthService from "../Services/AuthService";
 
 export const Cart = (props) => {
   //props coming through from ProductDetails Page
-  const { cartItems } = props
-   let [items, setItems] = useState(
-   cartItems || []
+  const { cartItems, addItem} = props
+   let [items, setItems] = useState(() => {
+      const saved = localStorage.getItem("cart")
+      const initialValue = JSON.parse(saved)
+      return initialValue || []}
   );
-  console.log("cartItems:", cartItems)
-  console.log("props:", props)
+  console.log("items cart:", items)
 
 
-  useEffect(() => {localStorage.getItem('cart')})
+  // useEffect(() => {localStorage.getItem('cart')})
 
    //sourcing user data
   const currentUser = (AuthService.getCurrentUser())
@@ -36,26 +37,7 @@ export const Cart = (props) => {
     setItems(cartCopy)
   }
   
-   function addItem(item){   
-    if(accountBalance > 0){ 
-    let cartCopy = [...items] || [] 
-    let  ProductId  = item.ProductId;
-    let existingItem = cartCopy.find(cartItem => cartItem.ProductId === ProductId);   
   
-    if (existingItem) {
-      console.log("Existing Item", items)
-      setItems(
-        cartCopy.map((x) =>
-          x.ProductId === item.ProductId ? { ...existingItem, qty: existingItem.qty + 1 } : x
-        ))
-    } else { 
-       cartCopy.push( {...item, qty: 1})
-           console.log("Add Item - CartCopy", cartCopy)
-           setItems([...cartCopy])
-    };
-    let stringCart = JSON.stringify(cartCopy);
-    localStorage.setItem("cart", stringCart)
-  } else {alert("You do not have tokens to make this purchase")}}
 
 
   function removeItem(item) {
@@ -96,7 +78,7 @@ export const Cart = (props) => {
 <div className="modal-dialog modal-lg modal-dialog-centered">
 <div className="modal-content">
    <div className="modal-header">
-       <h5 className="modal-title">Modal</h5>
+       <h5 className="modal-title">Cart</h5>
        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"
        ></button>
    </div>
@@ -106,7 +88,7 @@ export const Cart = (props) => {
      
      <div className="p-2 bd-highlight"></div>
     <div className="">
-      <h2>Cart Items</h2>
+      <h2>Cart Contents</h2>
       <div >
       { error && <div>{ error }</div> }
       { isPending && <div>Loading...</div> }
